@@ -16,7 +16,10 @@ router.get('/', ensureGuest, (req, res) => {
 router.get('/dashboard', ensureAuth, (req, res) => {
     // res.send('Dashboard')
     res.render('dashboard', {
-        name: req.user.displayName
+        name: req.user.displayName,
+        firstName: req.user.firstName,
+        lastName: req.user.lastName,
+        profileImg: req.user.image
     })
 })
 
