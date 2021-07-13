@@ -2,18 +2,26 @@ const express = require('express')
 const router = express.Router()
 const { ensureAuth } = require('../middleware/auth')
 
-// @desc Add Story page
-// @route GET /stories/add
-router.get('/', ensureAuth, (req, res) => {
-    console.log('logging user request', req)
-    res.render('profile/index'), {
-        linkedinId: req.user.linkedinId,
-        name: req.user.displayName,
-        firstName: req.user.firstName,
-        lastName: req.user.lastName,
-        profileImg: req.user.image        
+// UserSchema model
+const User = require('../models/User')
+
+// @desc Get User Profile
+// @route GET /profile
+router.get('/', ensureAuth, async (req, res) => {
+    try {
+        res.render('profile/index', {
+            name: req.user.firstName,
+            displayName: req.user.displayName,
+            image: req.user.image,            
+            linkedinId: req.user.linkedinId,
+        })        
+    } catch (err) {
+        console.error('OOoops, there was an error fetching your user profile! ' , err)
+        res.render('error/500')
     }
+    
 })
+
 
 
 // @desc Edit Profile Page

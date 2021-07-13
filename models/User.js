@@ -23,6 +23,10 @@ const UserSchema = new mongoose.Schema({
     emailAddress: {
         type: String
     },
+    userRole: {
+        type: String,
+        default: 'normal'
+    },    
     createdAt: {
         type: Date,
         default: Date.now

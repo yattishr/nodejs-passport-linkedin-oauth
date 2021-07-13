@@ -65,6 +65,18 @@ app.use('/events', require('./routes/events'))
 app.use('/profile', require('./routes/profile'))
 app.use('/settings', require('./routes/settings'))
 
+// Error message when Route not found
+app.use(function(req, res, next){
+    res.status(404);  
+    // respond with html page
+    if (req.accepts('html')) {
+      res.render('error/404', { url: req.url });
+      return;
+    }
+  });
+// End Error message
+
+
 const PORT = process.env.PORT || 3000
 
 app.listen(
