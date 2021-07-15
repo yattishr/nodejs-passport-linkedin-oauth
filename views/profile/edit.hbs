@@ -1,1 +1,77 @@
-<h1>Edit Profile Page</h1>
+<p>Update your account's profile information.</p>
+
+ <div class="row">
+    <form class="col s12">
+
+    <div class="col s12 m4">
+        <div class="card center-align">
+            <div class="card-content">
+                <span class="card-title">{{profile.displayName}} Profile</span>
+                <img src="{{profile.image}}" class="circle responsive-img img-small">
+            </div>
+            <div class="card-action">
+                <a href="/profile/edit/profilepic/{{linkedinId}}" class="waves-effect waves-light btn"><i class="fas fa-user-circle right"></i>Edit Profile Photo</a>
+            </div>
+        </div>
+    </div>
+
+      <div class="row">
+        <div class="input-field col s6">
+          <input placeholder="Placeholder" id="first_name" type="text" value={{profile.firstName}} class="validate">
+          <label for="first_name">First Name</label>
+        </div>
+        <div class="input-field col s6">
+          <input id="last_name" type="text" value={{profile.lastName}} class="validate">
+          <label for="last_name">Last Name</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input disabled value={{profile.linkedinId}} id="linkedinId" type="text" class="validate">
+          <label for="linkedinId">LinkedIn Id</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="displayName" type="text" value={{profile.displayName}} class="validate">
+          <label for="displayName" class="active">Display Name</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="email" type="email" class="validate">
+          <label for="email">Primary Email</label>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="input-field col s12">
+          <p>Briefly tell us about your public speaking experience</p>
+          <textarea id="body" name="body" class="materialize-textarea"></textarea>          
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="input-field col s4">
+          <input id="link1" type="url" class="validate">
+          <label for="link1">YouTube/Vimeo Link 1</label>
+          <span class="helper-text" data-error="invalid url" data-success="valid url">Valid URL's only</span>
+        </div>
+        <div class="input-field col s4">
+          <input id="link2" type="url" class="validate">
+          <label for="link2">YouTube/Vimeo Link 2</label>
+          <span class="helper-text" data-error="invalid url" data-success="valid url">Valid URL's only</span>
+        </div>          
+        <div class="input-field col s4">
+          <input id="link3" type="url" class="validate">
+          <label for="link3">YouTube/Vimeo Link 3</label>
+          <span class="helper-text" data-error="invalid url" data-success="valid url">Valid URL's only</span>
+        </div>                  
+      </div>
+
+    <button class="btn waves-effect waves-light" type="submit" name="action">Save
+        <i class="fas fa-save right"></i>
+    </button>
+
+    </form>
+  </div>

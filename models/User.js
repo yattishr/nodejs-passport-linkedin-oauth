@@ -27,6 +27,9 @@ const UserSchema = new mongoose.Schema({
         type: String,
         default: 'normal'
     },    
+    speakerBio:{
+        type: String
+    },
     createdAt: {
         type: Date,
         default: Date.now
