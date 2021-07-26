@@ -64,6 +64,8 @@ app.use('/auth', require('./routes/auth'))
 app.use('/events', require('./routes/events'))
 app.use('/profile', require('./routes/profile'))
 app.use('/settings', require('./routes/settings'))
+app.use('/categories', require('./routes/categories'))
+app.use('/landing', require('./routes/landing'))
 
 // Error message when Route not found
 app.use(function(req, res, next){

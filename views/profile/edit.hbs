@@ -10,7 +10,7 @@
                 <img src="{{profile.image}}" class="circle responsive-img img-small">
             </div>
             <div class="card-action">
-                <a href="/profile/edit/profilepic/{{linkedinId}}" class="waves-effect waves-light btn"><i class="fas fa-user-circle right"></i>Edit Profile Photo</a>
+                <a href="/profile/edit/profilepic/{{linkedinId}}" class="waves-effect waves-light red lighten-2 btn"><i class="fas fa-user-circle right"></i>Change Photo</a>
             </div>
         </div>
     </div>
@@ -51,6 +51,90 @@
         </div>
       </div>
 
+      </div>
+
+
+      <div class="row">
+        <div class="col s12">
+          <p>Let us know your interests for us to best serve you</p>
+        </div>
+      </div>
+      
+      <div class="row">        
+        <div class="col s4">
+          <label for="indeterminate-checkbox-1">
+            <input id="indeterminate-checkbox-1" type="checkbox" />
+            <span>Music</span>
+          </label>
+        </div>
+        
+        <div class="col s4">
+          <label for="indeterminate-checkbox-2">
+            <input id="indeterminate-checkbox-2" type="checkbox" />
+            <span>Art</span>
+          </label>
+        </div>
+        
+        <div class="col s4">
+          <label for="indeterminate-checkbox-3">
+            <input id="indeterminate-checkbox-3" type="checkbox" />
+            <span>Technology</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="row">        
+        <div class="col s4">
+          <label for="indeterminate-checkbox-4">
+            <input id="indeterminate-checkbox-4" type="checkbox" />
+            <span>Culture</span>
+          </label>
+        </div>
+        
+        <div class="col s4">
+          <label for="indeterminate-checkbox-5">
+            <input id="indeterminate-checkbox-5" type="checkbox" />
+            <span>Sport</span>
+          </label>
+        </div>
+        
+        <div class="col s4">
+          <label for="indeterminate-checkbox-6">
+            <input id="indeterminate-checkbox-6" type="checkbox" />
+            <span>Education</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="row">        
+        <div class="col s4">
+          <label for="indeterminate-checkbox-7">
+            <input id="indeterminate-checkbox-7" type="checkbox" />
+            <span>Business</span>
+          </label>
+        </div>
+        
+        <div class="col s4">
+          <label for="indeterminate-checkbox-8">
+            <input id="indeterminate-checkbox-8" type="checkbox" />
+            <span>Environment</span>
+          </label>
+        </div>
+        
+        <div class="col s4">
+          <label for="indeterminate-checkbox-9">
+            <input id="indeterminate-checkbox-9" type="checkbox" />
+            <span>Fashion</span>
+          </label>
+        </div>
+      </div>      
+
+      <div class="row">
+        <div class="col s12">
+          <p>Provide us with a few YouTube links of some of your Public Speaking appearances (if any, this is not compulsory)</p>
+        </div>
+      </div>
+
       <div class="row">
         <div class="input-field col s4">
           <input id="link1" type="url" class="validate">
@@ -69,7 +153,32 @@
         </div>                  
       </div>
 
-    <button class="btn waves-effect waves-light" type="submit" name="action">Save
+      <div class="row">
+        <div class="col s12">
+          <p>Now give us some details about your rates and pricing</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="input-field col s6">
+          <select>
+            <option value="" disabled selected>Choose your option</option>
+            <option value="1">Hourly</option>
+            <option value="2">Daily</option>
+            <option value="3">No charge</option>
+          </select>
+          <label>My Rate is</label>
+        </div>
+
+        <div class="input-field col s6">
+          <input placeholder="Rate" id="pay_rate" type="number" value="0.00" class="validate">
+          <label for="pay_rate">Specify your rate</label>
+        </div>                          
+      </div>
+
+
+
+    <button class="btn waves-effect waves-light red lighten-2" type="submit" name="action">Save
         <i class="fas fa-save right"></i>
     </button>
 
