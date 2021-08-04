@@ -6,7 +6,10 @@ const morgan = require('morgan')
 const exphbs = require('express-handlebars');
 const passport = require('passport');
 const session = require('express-session');
+const methodOverride = require('method-override');
+const bodyParser = require('body-parser');
 const MongoStore = require('connect-mongodb-session')(session);
+
 
 const connectDB = require('./config/db')
 
@@ -21,6 +24,20 @@ connectDB()
 
 const app = express()
 
+// Body parser
+app.use(express.urlencoded({ extended: false }))
+app.use(express.json())
+
+// Method Over-ride.
+app.use(methodOverride(function (req, res) {
+  if (req.body && typeof req.body === 'object' && '_method' in req.body) {
+    // look in urlencoded POST bodies and delete it
+    let method = req.body._method
+    delete req.body._method
+    return method
+  }
+}))
+
 // Appliction Logging
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'))
@@ -34,15 +51,13 @@ app.set('view engine', '.hbs');
 app.use(session({
     secret: 'pizza slice',
     resave: false,
-    saveUninitialized: false,
-    // store: new MongoStore({ mongooseConnection: mongoose.connection }),
+    saveUninitialized: false,    
     store:  new MongoStore({
         uri: process.env.MONGO_URI,
         collection: 'userSessions'
       })   
 
 }))
-
 
 // Passport middleware
 app.use(passport.initialize())
@@ -65,7 +80,6 @@ app.use('/events', require('./routes/events'))
 app.use('/profile', require('./routes/profile'))
 app.use('/settings', require('./routes/settings'))
 app.use('/categories', require('./routes/categories'))
-// app.use('/landing', require('./routes/landing'))
 
 // Error message when Route not found
 app.use(function(req, res, next){
@@ -77,6 +91,8 @@ app.use(function(req, res, next){
     }
   });
 // End Error message
+
+
 
 
 const PORT = process.env.PORT || 3000

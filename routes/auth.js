@@ -5,7 +5,7 @@ const router = express.Router()
 
 // @desc Authenticate with LinkedIn
 // @route GET /auth/linkedin
-router.get('/linkedin', passport.authenticate('linkedin', { scope: ['r_emailaddress', 'r_liteprofile'],
+router.get('/linkedin', passport.authenticate('linkedin', { scope: ['r_emailaddress', 'r_liteprofile', 'r_basicprofile', 'r_organization_social'],
                                                             profileFields: ['id', 
                                                             'first-name', 
                                                             'last-name', 

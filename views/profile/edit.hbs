@@ -1,8 +1,8 @@
 <p>Update your account's profile information.</p>
 
  <div class="row">
-    <form class="col s12">
-
+    <form action="/profile/{{profile.linkedinId}}" method="POST" class="col s12">
+    <input type="hidden" name="_method" value="PUT">
     <div class="col s12 m4">
         <div class="card center-align">
             <div class="card-content">
@@ -39,7 +39,7 @@
       </div>
       <div class="row">
         <div class="input-field col s12">
-          <input id="email" type="email" class="validate">
+          <input id="email" type="email" class="validate" value="{{profile.emailAddress}}">
           <label for="email">Primary Email</label>
         </div>
       </div>
@@ -47,7 +47,7 @@
       <div class="row">
         <div class="input-field col s12">
           <p>Briefly tell us about your public speaking experience</p>
-          <textarea id="body" name="body" class="materialize-textarea"></textarea>          
+          <textarea id="body" name="body" class="materialize-textarea">{{profile.speakerBio}}</textarea>          
         </div>
       </div>
 
@@ -199,6 +199,7 @@
     <button class="btn waves-effect waves-light red lighten-2" type="submit" name="action">Save
         <i class="fas fa-save right"></i>
     </button>
+    <a href="/dashboard" class="btn orange">Cancel</a>
 
     </form>
   </div>

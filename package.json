@@ -11,6 +11,7 @@
   "author": "Yattish Ramhorry",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.21.1",
     "connect-mongo": "^4.4.1",
     "connect-mongodb-session": "^2.4.1",
     "cross-env": "^7.0.3",

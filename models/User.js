@@ -27,6 +27,10 @@ const UserSchema = new mongoose.Schema({
         type: String,
         default: 'normal'
     },    
+    profileType: {
+        type: String,
+        default: 'public'
+    },
     speakerBio:{
         type: String
     },
