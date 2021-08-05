@@ -20,6 +20,9 @@ const UserSchema = new mongoose.Schema({
     image: {
         type: String
     },
+    headline: {
+        type: String
+    },
     emailAddress: {
         type: String
     },
@@ -31,9 +34,16 @@ const UserSchema = new mongoose.Schema({
         type: String,
         default: 'public'
     },
-    speakerBio:{
+    body: {
         type: String
     },
+    payRate: {
+        type: Number,
+        default: 0.00
+    },
+    videoLinks: [{
+        type: String
+    }],
     createdAt: {
         type: Date,
         default: Date.now

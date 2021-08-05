@@ -10,44 +10,44 @@
                 <img src="{{profile.image}}" class="circle responsive-img img-small">
             </div>
             <div class="card-action">
-                <a href="/profile/edit/profilepic/{{linkedinId}}" class="waves-effect waves-light red lighten-2 btn"><i class="fas fa-user-circle right"></i>Change Photo</a>
+                <a href="/profile/edit/profilepic/{{profile.linkedinId}}" class="waves-effect waves-light red lighten-2 btn"><i class="fas fa-user-circle right"></i>Change Photo</a>
             </div>
         </div>
     </div>
 
       <div class="row">
         <div class="input-field col s6">
-          <input placeholder="Placeholder" id="first_name" type="text" value={{profile.firstName}} class="validate">
-          <label for="first_name">First Name</label>
+          <input placeholder="Placeholder" id="firstName" name="firstName" type="text" value={{profile.firstName}} class="validate">
+          <label for="firstName">First Name</label>
         </div>
         <div class="input-field col s6">
-          <input id="last_name" type="text" value={{profile.lastName}} class="validate">
-          <label for="last_name">Last Name</label>
+          <input id="lastName" type="text" name="lastName" value={{profile.lastName}} class="validate">
+          <label for="lastName">Last Name</label>
         </div>
       </div>
       <div class="row">
         <div class="input-field col s12">
-          <input disabled value={{profile.linkedinId}} id="linkedinId" type="text" class="validate">
+          <input disabled name="linkedinId" value={{profile.linkedinId}} id="linkedinId" type="text" class="validate">
           <label for="linkedinId">LinkedIn Id</label>
         </div>
       </div>
       <div class="row">
         <div class="input-field col s12">
-          <input id="displayName" type="text" value={{profile.displayName}} class="validate">
+          <input id="displayName" name="displayName" type="text" value={{profile.displayName}} class="validate">
           <label for="displayName" class="active">Display Name</label>
         </div>
       </div>
       <div class="row">
         <div class="input-field col s12">
-          <input id="email" type="email" class="validate" value="{{profile.emailAddress}}">
-          <label for="email">Primary Email</label>
+          <input id="emailAddress" name="emailAddress" type="email" class="validate" value="{{profile.emailAddress}}">
+          <label for="emailAddress">Primary Email</label>
         </div>
       </div>
 
       <div class="row">
         <div class="input-field col s12">
           <p>Briefly tell us about your public speaking experience</p>
-          <textarea id="body" name="body" class="materialize-textarea">{{profile.speakerBio}}</textarea>          
+          <textarea id="body" name="body" class="materialize-textarea">{{profile.body}}</textarea>          
         </div>
       </div>
 
@@ -137,17 +137,17 @@
 
       <div class="row">
         <div class="input-field col s4">
-          <input id="link1" type="url" class="validate">
+          <input id="link1" type="url" name="videoLinks" value={{profile.videoLinks}} class="validate">
           <label for="link1">YouTube/Vimeo Link 1</label>
           <span class="helper-text" data-error="invalid url" data-success="valid url">Valid URL's only</span>
         </div>
         <div class="input-field col s4">
-          <input id="link2" type="url" class="validate">
+          <input id="link2" type="url" name="videoLinks" value={{profile.videoLinks}} class="validate">
           <label for="link2">YouTube/Vimeo Link 2</label>
           <span class="helper-text" data-error="invalid url" data-success="valid url">Valid URL's only</span>
         </div>          
         <div class="input-field col s4">
-          <input id="link3" type="url" class="validate">
+          <input id="link3" type="url" name="videoLinks" value={{profile.videoLinks}} class="validate">
           <label for="link3">YouTube/Vimeo Link 3</label>
           <span class="helper-text" data-error="invalid url" data-success="valid url">Valid URL's only</span>
         </div>                  
@@ -171,8 +171,8 @@
         </div>
 
         <div class="input-field col s6">
-          <input placeholder="Rate" id="pay_rate" type="number" value="0.00" class="validate">
-          <label for="pay_rate">Specify your rate</label>
+          <input placeholder="Rate" id="payRate" name="payRate" type="number" value={{profile.payRate}} class="validate">
+          <label for="payRate">Specify your rate</label>
         </div>                          
       </div>
 
@@ -196,10 +196,10 @@
         </div>
       </div>
 
-    <button class="btn waves-effect waves-light red lighten-2" type="submit" name="action">Save
+    <button class="btn waves-effect waves-light red lighten-2" type="submit">Save
         <i class="fas fa-save right"></i>
     </button>
-    <a href="/dashboard" class="btn orange">Cancel</a>
+    <a href="/profile" class="btn orange">Cancel</a>
 
     </form>
   </div>

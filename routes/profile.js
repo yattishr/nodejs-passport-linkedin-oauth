@@ -94,7 +94,7 @@ router.put('/:id', ensureAuth, async (req, res) => {
     let profile = await User.findOne({
       linkedinId: req.params.id,
     }).lean()
-
+    console.log('this is the user profile:', profile)
     if (!profile) {
       return res.render('error/404')
     }
@@ -106,6 +106,9 @@ router.put('/:id', ensureAuth, async (req, res) => {
         new: true,
         runValidators: true
       })
+      console.log('the request body is:', req.body)
+      console.log('the updated profile:', profile)
+
       res.redirect('/dashboard')
     }
   } catch {
