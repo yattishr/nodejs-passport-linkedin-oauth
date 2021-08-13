@@ -23,6 +23,9 @@ const UserSchema = new mongoose.Schema({
     headline: {
         type: String
     },
+    vanityname: {
+        type: String
+    },
     emailAddress: {
         type: String
     },

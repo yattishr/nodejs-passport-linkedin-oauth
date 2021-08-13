@@ -25,28 +25,36 @@ const makeGetRequest = async (base_url) => {
   }
 }
 
-const showData = async (base_url) => {
-  const body = await makeGetRequest(base_url)
-  console.log(body.data.localizedHeadline)
-}
-
-showData('https://api.linkedin.com/v2/me');
-
 // @desc Get User Profile
 // @route GET /profile
 router.get('/', ensureAuth, async (req, res) => {
     try {
-        res.render('profile/index', {
-            name: req.user.firstName,
-            displayName: req.user.displayName,
-            image: req.user.image,            
-            linkedinId: req.user.linkedinId,
-        })        
-    } catch (err) {
-        console.error('OOoops, there was an error fetching your user profile! ' , err)
-        res.render('error/500')
-    }
-    
+          const showData = async (base_url) => {
+            try {
+              const body = await makeGetRequest(base_url)
+              return body
+            } catch(error) {
+              console.error('OOoops, there was an error fetching your LinkedIn profile! ' , err)
+            }
+          }
+
+          let body = await showData('https://api.linkedin.com/v2/me')      
+          let headline = await body.data.localizedHeadline
+          let vanityName = await body.data.vanityName
+          console.log(headline)      
+
+          res.render('profile/index', {
+              headline,
+              vanityName,
+              name: req.user.firstName,
+              displayName: req.user.displayName,
+              image: req.user.image,            
+              linkedinId: req.user.linkedinId,
+          })        
+          } catch (err) {
+              console.error('OOoops, there was an error fetching your user profile! ' , err)
+              res.render('error/500')
+          }    
 })
 
 
@@ -60,37 +68,47 @@ router.get('/edit', ensureAuth, (req, res) => {
 // @desc Show Edit page
 // @route GET /stories/edit/:id
 router.get('/edit/:id', ensureAuth, async (req, res) => {
-
     try {
-        const profile = await User.findOne({
-            linkedinId: req.params.id,
-        }).lean()
-    
-        if (!profile) {
-          return res.render('error/404')
-        }
-    
-        if (profile.linkedinId != req.user.linkedinId) {
-          res.redirect('/profile')
-        } else {
-          res.render('profile/edit', {
-            profile,
-          })
-        }
-      } catch (err) {
-        console.error(err)
-        return res.render('error/500')
-      }    
+          // LinkedIn Fetch API
+          const showData = async (base_url) => {
+            try {
+              const body = await makeGetRequest(base_url)
+              return body
+            } catch(error) {
+              console.error('OOoops, there was an error fetching your LinkedIn profile! ' , err)
+            }
+          }
 
+          let body = await showData('https://api.linkedin.com/v2/clientAwareMemberHandles?q=members&projection=(elements*(handle~))')      
+          console.log(body.data.elements)
+          // End LinkedIn Fetch API
+          
+          const profile = await User.findOne({
+              linkedinId: req.params.id,
+          }).lean()
+    
+          if (!profile) {
+            return res.render('error/404')
+          }
+    
+          if (profile.linkedinId != req.user.linkedinId) {
+            res.redirect('/profile')
+          } else {
+            res.render('profile/edit', {
+              profile,
+            })
+          }
+        } catch (err) {
+          console.error(err)
+          return res.render('error/500')
+        }
 })
 
 
 // @desc Update Profile page
 // @route PUT /users/:id
 router.put('/:id', ensureAuth, async (req, res) => {
-
   try {
-    // let profile = await User.findOne(req.params.id).lean()
     let profile = await User.findOne({
       linkedinId: req.params.id,
     }).lean()
@@ -106,9 +124,6 @@ router.put('/:id', ensureAuth, async (req, res) => {
         new: true,
         runValidators: true
       })
-      console.log('the request body is:', req.body)
-      console.log('the updated profile:', profile)
-
       res.redirect('/dashboard')
     }
   } catch {

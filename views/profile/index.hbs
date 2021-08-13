@@ -11,10 +11,11 @@
     <div class="col s12 m4">
         <div class="card center-align">
             <div class="card-content">
-                <span class="card-title">{{name}} Profile</span>
+                <span class="card-title">{{profile.displayName}} Profile</span>
                 <img src="{{image}}" class="circle responsive-img img-small">
             </div>
-            <p>Here goes the profile summary:</p>
+            <p><span class="blue-text text-darken-2">{{headline}}</span></p>            
+            <a href="www.linkedin.com/in/{{vanityName}}"><span class="blue-text text-darken-2">www.linkedin.com/in/{{vanityName}}</span></a>
             <div class="card-action">
                 <a href="/profile/edit/{{linkedinId}}" class="waves-effect waves-light btn"><i class="fas fa-user-circle right"></i>Edit Profile </a>
             </div>
