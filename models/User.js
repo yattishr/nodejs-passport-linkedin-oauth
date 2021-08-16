@@ -47,6 +47,9 @@ const UserSchema = new mongoose.Schema({
     videoLinks: [{
         type: String
     }],
+    categoriesInterest: [{
+        type: String
+    }],
     createdAt: {
         type: Date,
         default: Date.now

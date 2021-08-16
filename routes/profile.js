@@ -79,8 +79,11 @@ router.get('/edit/:id', ensureAuth, async (req, res) => {
             }
           }
 
-          let body = await showData('https://api.linkedin.com/v2/clientAwareMemberHandles?q=members&projection=(elements*(handle~))')      
-          console.log(body.data.elements)
+          // retrieve users email address from LinkedIn
+          let body = await showData('https://api.linkedin.com/v2/clientAwareMemberHandles?q=members&projection=(elements*(handle~))')
+          let emailAddress = body.data.elements[0]['handle~']['emailAddress']
+          console.log(body.data.elements[0].handle)
+          console.log(emailAddress)
           // End LinkedIn Fetch API
           
           const profile = await User.findOne({
@@ -96,6 +99,7 @@ router.get('/edit/:id', ensureAuth, async (req, res) => {
           } else {
             res.render('profile/edit', {
               profile,
+              emailAddress
             })
           }
         } catch (err) {
