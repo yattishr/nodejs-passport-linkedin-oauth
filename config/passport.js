@@ -13,7 +13,7 @@ module.exports = function(passport) {
         const newUser = {
             linkedinId: profile.id,        
             displayName: profile.displayName,
-            image: profile.photos[0].value,
+            image: profile.photos[1].value,
             firstName: profile.name.givenName,
             lastName: profile.name.familyName,
             emailAddress: profile.emailAddress
@@ -32,7 +32,6 @@ module.exports = function(passport) {
         } catch(err) {
             console.error('Oooops, there was an error logging in!', err)
         }
-
 
     }))
 

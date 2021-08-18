@@ -19,6 +19,7 @@ const makeGetRequest = async (base_url) => {
   }
 
   try {
+    console.log(`LinkedIn API GET Request Calling ${base_url}...` )
     return await axios(config)
   } catch (error) {
     console.error('OOoops, there was an error fetching your LinkedIn profile! ' , err)
@@ -37,18 +38,17 @@ router.get('/', ensureAuth, async (req, res) => {
               console.error('OOoops, there was an error fetching your LinkedIn profile! ' , err)
             }
           }
-
-          let body = await showData('https://api.linkedin.com/v2/me')      
+          let urlStr = `https://api.linkedin.com/v2/people/(id:${req.user.linkedinId})`
+          let body = await showData(urlStr)      
           let headline = await body.data.localizedHeadline
           let vanityName = await body.data.vanityName
-          console.log(headline)      
 
           res.render('profile/index', {
               headline,
               vanityName,
               name: req.user.firstName,
               displayName: req.user.displayName,
-              image: req.user.image,            
+              image: req.user.image,
               linkedinId: req.user.linkedinId,
           })        
           } catch (err) {
@@ -82,7 +82,6 @@ router.get('/edit/:id', ensureAuth, async (req, res) => {
           // retrieve users email address from LinkedIn
           let body = await showData('https://api.linkedin.com/v2/clientAwareMemberHandles?q=members&projection=(elements*(handle~))')
           let emailAddress = body.data.elements[0]['handle~']['emailAddress']
-          console.log(body.data.elements[0].handle)
           console.log(emailAddress)
           // End LinkedIn Fetch API
           
@@ -96,7 +95,7 @@ router.get('/edit/:id', ensureAuth, async (req, res) => {
     
           if (profile.linkedinId != req.user.linkedinId) {
             res.redirect('/profile')
-          } else {
+          } else {            
             res.render('profile/edit', {
               profile,
               emailAddress
@@ -128,6 +127,7 @@ router.put('/:id', ensureAuth, async (req, res) => {
         new: true,
         runValidators: true
       })
+      console.log("the request body: ", req.body)
       res.redirect('/dashboard')
     }
   } catch {

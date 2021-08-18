@@ -44,6 +44,15 @@ const UserSchema = new mongoose.Schema({
         type: Number,
         default: 0.00
     },
+    country: {
+        type: String
+    },
+    city: {
+        type: String
+    },
+    town: {
+        type: String
+    },
     videoLinks: [{
         type: String
     }],
