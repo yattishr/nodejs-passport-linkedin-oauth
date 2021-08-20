@@ -17,11 +17,11 @@
 
       <div class="row">
         <div class="input-field col s6">
-          <input placeholder="Placeholder" id="firstName" name="firstName" type="text" value={{profile.firstName}} class="validate">
+          <input placeholder="Placeholder" id="firstName" name="firstName" type="text" value="{{profile.firstName}}" class="validate" required>
           <label for="firstName">First Name</label>
         </div>
         <div class="input-field col s6">
-          <input id="lastName" type="text" name="lastName" value={{profile.lastName}} class="validate">
+          <input id="lastName" type="text" name="lastName" value="{{profile.lastName}}" class="validate" required>
           <label for="lastName">Last Name</label>
         </div>
       </div>
@@ -33,15 +33,19 @@
       </div>
       <div class="row">
         <div class="input-field col s12">
-          <input id="displayName" name="displayName" type="text" value="{{profile.displayName}}" class="validate">
+          <input id="displayName" name="displayName" type="text" value="{{profile.displayName}}" class="validate" required>
           <label for="displayName" class="active">Display Name</label>
         </div>
       </div>
       <div class="row">
-        <div class="input-field col s12">
-          <input id="emailAddress" name="emailAddress" type="email" class="validate" value={{profile.emailAddress}}>
+        <div class="input-field col s6">
+          <input id="emailAddress" name="emailAddress" type="email" class="validate" required value={{profile.emailAddress}}>
           <label for="emailAddress">Primary Email</label>
         </div>
+        <div class="input-field col s6">
+          <input id="phone" name="phone" type="text" class="validate" value={{profile.phone}}>
+          <label for="phone">Phone</label>
+        </div>        
       </div>
 
       <div class="row">
@@ -189,7 +193,7 @@
         </div>
 
         <div class="input-field col s6">
-          <input placeholder="Rate" id="payRate" name="payRate" type="number" value={{profile.payRate}} class="validate">
+          <input placeholder="Rate" id="payRate" name="payRate" type="number" value={{profile.payRate}} class="validate" step="10">
           <label for="payRate">Specify your rate</label>
         </div>                          
       </div>

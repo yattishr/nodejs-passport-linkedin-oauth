@@ -26,6 +26,8 @@
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>      
     <script>
+        
+        // MaterializeCSS Nav component
         M.Sidenav.init(document.querySelector('.sidenav'))
 
         CKEDITOR.replace('body', {
@@ -35,9 +37,16 @@
             format_tags: 'p;h1;h2;h3;h4;h5;h6;pre;address;div'
         })
 
+        // MaterializeCSS Drop-down component
         M.FormSelect.init(document.querySelector('select'))     
 
+        // MaterializeCSS Chip component
         M.Chips.init(document.querySelector('.chips'))
+
+        // MaterializeCSS Toast component
+        M.Toast.init(document.querySelector('.toast'))
+        let toastInstance = M.Toast.getInstance(toastElement);
+        toastInstance.dismiss();        
 
     </script>          
 </body>

@@ -2,9 +2,13 @@ const express = require('express')
 const router = express.Router()
 const { ensureAuth } = require('../middleware/auth')
 const axios = require('axios');
+const flash = require('connect-flash');
 
 // UserSchema model
 const User = require('../models/User')
+
+// define errors array.
+let errors = [];
 
 // Function call for LinkedIn API ver 2.00.
 const makeGetRequest = async (base_url) => {
@@ -97,6 +101,7 @@ router.get('/edit/:id', ensureAuth, async (req, res) => {
             res.redirect('/profile')
           } else {            
             res.render('profile/edit', {
+              errors,
               profile,
               emailAddress
             })
@@ -107,11 +112,16 @@ router.get('/edit/:id', ensureAuth, async (req, res) => {
         }
 })
 
-
 // @desc Update Profile page
 // @route PUT /users/:id
 router.put('/:id', ensureAuth, async (req, res) => {
   try {
+
+    // error checking and validation
+    if(req.body.firstName.length < 0 || req.body.lastName.length < 0 || req.body.displayName.length < 0 || req.body.emailAddress.length < 0) {
+      errors.push({ msg : 'Please fill in all required fields.'})
+    }    
+
     let profile = await User.findOne({
       linkedinId: req.params.id,
     }).lean()
@@ -122,13 +132,22 @@ router.put('/:id', ensureAuth, async (req, res) => {
 
     if(profile.linkedinId != req.user.linkedinId) {
       res.redirect('/profile')
-    } else {
-      profile = await User.findOneAndUpdate({ linkedinId: req.params.id }, req.body, {
-        new: true,
-        runValidators: true
-      })
-      console.log("the request body: ", req.body)
-      res.redirect('/dashboard')
+    } else {      
+      // lets do our validation checking here.
+      if (errors.length > 0) {
+        res.render('profile/edit', {
+          errors,
+          profile,
+          emailAddress
+        })        
+      } else {
+        profile = await User.findOneAndUpdate({ linkedinId: req.params.id }, req.body, {
+          new: true,
+          runValidators: true
+        })
+        console.log("the request body: ", req.body)
+        res.redirect('/dashboard')
+      }
     }
   } catch {
     console.error(err)

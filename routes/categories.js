@@ -3,17 +3,18 @@ const router = express.Router()
 const { ensureAuth } = require('../middleware/auth')
 
 // UserSchema model
-const User = require('../models/User')
+const Categories = require('../models/InterestCategories')
 
 // @desc Get User Profile
 // @route GET /profile 
 router.get('/', ensureAuth, async (req, res) => {
     try {
+      const categories = await Categories.find()
+        .sort({ createdAt: 'desc' })
+        .lean()      
+      console.log('the categories are: ', categories)
         res.render('categories/index', {
-            name: req.user.firstName,
-            displayName: req.user.displayName,
-            image: req.user.image,            
-            linkedinId: req.user.linkedinId,
+          categories
         })        
     } catch (err) {
         console.error('OOoops, there was an error fetching your user profile! ' , err)
@@ -22,9 +23,21 @@ router.get('/', ensureAuth, async (req, res) => {
     
 })
 
+// @desc Process add form
+// @route POST /categories
+router.post('/', ensureAuth, async (req, res) => {
+  try {      
+        await Categories.create(req.body)
+        console.log('the request body is: ', req.body)
+        res.redirect('/categories')
+  } catch(err) {
+        console.log('OOOoops, and error occured! ' ,err)
+        res.render('error/500')
+  }
+})
 
-// @desc Edit Profile Page
-// @route GET /profile/edit
+// @desc Edit Categories Page
+// @route GET /categories/edit
 router.get('/edit', ensureAuth, (req, res) => {
     res.render('categories/edit')
 })

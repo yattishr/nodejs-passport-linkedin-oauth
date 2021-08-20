@@ -1,5 +1,38 @@
 <h1>Interest Categories</h1>
-<p>Here are is a list of the categories of interest</p>
+    <form action="/categories" method="POST" class="col s12">
+        <div class="row">
+            <div class="input-field col s12">
+                <input name="categoryName" value="{{categories.categoryName}}" id="categoryName" type="text" class="validate" required>
+                <label for="categoryName">Category Name</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <input name="displayName" value="{{categories.displayName}}" id="displayName" type="text" class="validate">
+                <label for="displayName">Display Name</label>
+            </div>
+        </div>         
+
+        <div class="row">
+            <input type="submit" value="Save" class="btn">
+            <a href="/dashboard" class="btn orange">Cancel</a>
+        </div>
+
+    </form>
+
+<div class="row">
+
+    {{#each categories}}
+        <div class="chip red lighten-3">        
+            <a href="/categories/{{categories._id}}">{{categories.categoryName}} + 1</a>
+        </div>     
+    {{else}}
+        <p>No Categories to display.</p>
+    {{/each}}    
+
+</div>
+
+<p>Here is a list of the categories of interest</p>
 <ol>
     <li>Music</li>
     <li>Art</li>

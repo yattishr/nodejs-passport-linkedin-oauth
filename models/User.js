@@ -29,6 +29,9 @@ const UserSchema = new mongoose.Schema({
     emailAddress: {
         type: String
     },
+    phone: {
+        type: String
+    },
     userRole: {
         type: String,
         default: 'normal'
