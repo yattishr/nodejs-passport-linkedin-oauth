@@ -23,9 +23,30 @@
 <div class="row">
     {{#each categories}}
         <div class="chip red lighten-2">        
-            <a href="/categories/delete/{{_id}}"><span class="grey-text text-lighten-2">{{categoryName}} <i class="fas fa-times"></i></span></a>
+            <a href="/categories/delete/{{categoryName}}/{{_id}}"><span class="grey-text text-lighten-2">{{categoryName}} <i class="fas fa-times"></i></span></a>
         </div>
     {{else}}
         <p>No Categories to display.</p>
     {{/each}}
 </div>
+
+<div class="row">
+    {{#each categories}}
+        <label for="{{categoryName}}">
+        <input id="{{categoryName}}" name="{{categoryName}}" type="checkbox" />
+        <span>{{categoryName}}</span>
+        </label>
+    {{/each}}
+</div>
+
+{{#each categories}}
+    <div class="row">
+        <div class="col s3">
+            <label for="{{tagName}}">
+            <input id="{{tagName}}" name="{{tagName}}" type="checkbox" />
+            <span>{{categoryName}}</span>
+            </label>        
+        </div>
+    </div>
+{{/each}}
+

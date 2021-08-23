@@ -7,6 +7,9 @@ const flash = require('connect-flash');
 // UserSchema model
 const User = require('../models/User')
 
+// CategoriesSchema model
+const Categories = require('../models/InterestCategories')
+
 // define errors array.
 let errors = [];
 
@@ -88,6 +91,11 @@ router.get('/edit/:id', ensureAuth, async (req, res) => {
           let emailAddress = body.data.elements[0]['handle~']['emailAddress']
           console.log(emailAddress)
           // End LinkedIn Fetch API
+
+          // lets load the categories data
+          const categories = await Categories.find()
+          .sort({ createdAt: 'desc' })
+          .lean()
           
           const profile = await User.findOne({
               linkedinId: req.params.id,
@@ -101,6 +109,7 @@ router.get('/edit/:id', ensureAuth, async (req, res) => {
             res.redirect('/profile')
           } else {            
             res.render('profile/edit', {
+              categories,
               errors,
               profile,
               emailAddress

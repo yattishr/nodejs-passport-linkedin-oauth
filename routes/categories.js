@@ -11,8 +11,7 @@ router.get('/', ensureAuth, async (req, res) => {
     try {
       const categories = await Categories.find()
         .sort({ createdAt: 'desc' })
-        .lean()      
-      console.log('the categories are: ', categories)
+        .lean()
         res.render('categories/index', {
           categories
         })        
@@ -27,8 +26,11 @@ router.get('/', ensureAuth, async (req, res) => {
 // @route POST /categories
 router.post('/', ensureAuth, async (req, res) => {
   try {      
+        let newString = ""
+        newString = req.body.categoryName.replace(/[^A-Z0-9]+/ig, "_");
+        console.log('the newString value is: ', newString.toLowerCase().trim())
+        req.body.tagName = newString.toLowerCase().trim()
         await Categories.create(req.body)
-        console.log('the request body is: ', req.body)
         res.redirect('/categories')
   } catch(err) {
         console.log('OOOoops, and error occured! ' ,err)
@@ -44,7 +46,7 @@ router.get('/edit', ensureAuth, (req, res) => {
 
 
 // @desc Show Edit page
-// @route GET /stories/edit/:id
+// @route GET /categories/edit/:id. NOT NEEDED NOW.
 router.get('/edit/:id', ensureAuth, async (req, res) => {
 
     try {
@@ -57,9 +59,9 @@ router.get('/edit/:id', ensureAuth, async (req, res) => {
         }
     
         if (profile.linkedinId != req.user.linkedinId) {
-          res.redirect('/profile')
+          res.redirect('/categories')
         } else {
-          res.render('profile/edit', {
+          res.render('categories/edit', {
             profile,
           })
         }
@@ -70,5 +72,17 @@ router.get('/edit/:id', ensureAuth, async (req, res) => {
 
 })
 
+
+// @desc DELETE Categories
+// @route DELETE /categories/:id. NOT NEEDED NOW.
+router.delete('/:id', ensureAuth, async (req, res) => {
+  try {
+      await categories.remove({_id: req.params.id})
+      res.redirect('/dashboard')
+  } catch(err) {
+    console.error(err)
+    return res.render('error/500')
+  }
+})
 
 module.exports = router

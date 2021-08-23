@@ -8,6 +8,9 @@ const CategoriesSchema = new mongoose.Schema({
     displayName: {
         type: String
     },
+    tagName: {
+        type: String
+    },    
     createdAt: {
         type: Date,
         default: Date.now
