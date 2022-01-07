@@ -1,13 +1,17 @@
 {
-  "name": "nodejs-storybooks-app",
+  "name": "nodejs-linkedin-auth",
   "version": "1.0.0",
-  "description": "App to create public and private stories",
+  "description": "Online marketplace for Public Speakers and for Event Organizers",
   "main": "app.js",
   "scripts": {
     "start": "cross-env NODE_ENV=production node app",
-    "dev": "cross-env NODE_ENV=development nodemon app"
+    "dev": "cross-env NODE_ENV=development nodemon app",
+    "deploy": "firebase deploy --token $FIREBASE_TOKEN"
   },
-  "keywords": [],
+  "keywords": [
+    "public speakers",
+    "event organizers"
+  ],
   "author": "Yattish Ramhorry",
   "license": "ISC",
   "dependencies": {
@@ -15,6 +19,7 @@
     "connect-flash": "^0.1.1",
     "connect-mongo": "^4.4.1",
     "connect-mongodb-session": "^2.4.1",
+    "consolidate": "^0.16.0",
     "cross-env": "^7.0.3",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",

@@ -20,7 +20,7 @@ const makeGetRequest = async (base_url) => {
     url: base_url,      
     headers: {
       'X-RestLi-Protocol-Version': '2.0.0',
-      'Authorization': 'Bearer AQXmCofkII5Zq8J0P9amuezBJpM8Tmwq8WLHiQKRFX3qO855gAZ1JnmDbarzP0JqUK12g2xYxrT3ThvyR563s4rh80vL20ac1JvsrA9fDaY1UQMlACs9M6aFlxgV2qBBX7Rxe-44RGfIn8PzwS1ylrGZc45Dx4SXDf-cTkGx_d1KPTvcsr3ZlHga04s_ANPC0HQxeY62LQqniWLO95Vlr5w3hOE0Y1vlHsiODIWepfwYtmFkDAd2CT21dV9rNS3jHyaE6Q7DTMBGaWzihte57b_NQ6sKMVY1EnVuQIawa7eV4ssCaYwxVFxkFb7mJL3uJqC9IhdC0uq0b4blNNiZMwjjOggMRQ',
+      'Authorization': 'Bearer AQVvHE4eOXv6jBZMuu9RUEBor2uDWauOhUBDboRoAo3HmqcHOF8vDTBHbUjjoc8i8x73TSeb8UmCF9dSqEW3B3cPQ7V6rQV06QB2IP6i2QTZTmQSrr7o-qHbW7NRQx2SZ4iqM0u4PaA2xCAkiw1dBhFp7WLIn0iefAa0e-IGzsXRotuSJ49ZBoPfpGLjakizLd4ZszRMJd-3YtpybHFFP53Rmh_AA4T0RtxIkpxhLNWbNCec_kuY9Hdu3R8GxvNoG7HCL82Y9co1KKNB2tXNqMQznwgHiV-jsid5PcrkF6Lhsfz1bf9RbWnGDt-HhRW2bjsmHR-j2QfTrj1oJgueajP6hOZRpw',
       'Cookie': 'lidc="b=OB43:s=O:r=O:a=O:p=O:g=2936:u=423:x=1:i=1627662830:t=1627663637:v=2:sig=AQEf6eul1b2yvnxLeLGmnkrUG9jRa7o9"; bcookie="v=2&379576f8-c09f-4580-8954-f09da4c20346"; lissc=1; _ga=GA1.2.1950358762.1626448789; aam_uuid=47155253070540489863377287992130959648; liap=true; AMCV_14215E3D5995C57C0A495C55%40AdobeOrg=-637568504%7CMCIDTS%7C18825%7CMCMID%7C47377235381028590253319617699886828267%7CMCAAMLH-1627055446%7C6%7CMCAAMB-1627055446%7C6G1ynYcLPuiQxYZrsz_pkqfLG9yMXBpb2zX5dvJdYQJzPXImdj0y%7CMCOPTOUT-1626457846s%7CNONE%7CvVersion%7C5.1.1%7CMCCIDH%7C1875071450'
     }      
   }
@@ -29,7 +29,7 @@ const makeGetRequest = async (base_url) => {
     console.log(`LinkedIn API GET Request Calling ${base_url}...` )
     return await axios(config)
   } catch (error) {
-    console.error('OOoops, there was an error fetching your LinkedIn profile! ' , err)
+    console.error('OOoops, there was an error fetching your LinkedIn profile! ' , error)
   }
 }
 
@@ -40,16 +40,21 @@ router.get('/', ensureAuth, async (req, res) => {
           const showData = async (base_url) => {
             try {
               const body = await makeGetRequest(base_url)
+              // console.log(`my body data is: ${body.data}`)
               return body
             } catch(error) {
-              console.error('OOoops, there was an error fetching your LinkedIn profile! ' , err)
+              console.error('OOoops, there was an error fetching your LinkedIn profile! ' , error)
             }
           }
           let urlStr = `https://api.linkedin.com/v2/people/(id:${req.user.linkedinId})`
-          let body = await showData(urlStr)      
+          let profileImageStr = `https://api.linkedin.com/v2/people/(id:${req.user.linkedinId})?projection=(id,profilePicture(displayImage~digitalmediaAsset:playableStreams))`
+          let body = await showData(urlStr)
+          let profileImagebody = await showData(profileImageStr)
+          
+          console.log('data returned from image string is: ', profileImagebody.data.profilePicture['displayImage~']['elements'][0][0])
           let headline = await body.data.localizedHeadline
           let vanityName = await body.data.vanityName
-
+          console.log('the current profile image is: ', req.user.image)
           res.render('profile/index', {
               headline,
               vanityName,
@@ -82,19 +87,19 @@ router.get('/edit/:id', ensureAuth, async (req, res) => {
               const body = await makeGetRequest(base_url)
               return body
             } catch(error) {
-              console.error('OOoops, there was an error fetching your LinkedIn profile! ' , err)
+              console.error('OOoops, there was an error fetching your LinkedIn profile! ' , error)
             }
           }
 
-          // retrieve users email address from LinkedIn
-          let body = await showData('https://api.linkedin.com/v2/clientAwareMemberHandles?q=members&projection=(elements*(handle~))')
-          let emailAddress = body.data.elements[0]['handle~']['emailAddress']
-          console.log(emailAddress)
+          // retrieve users email address from LinkedIn. LinkedIn Retrieve Email Address API not working. 06 Jan 2022
+          // let body = await showData('https://api.linkedin.com/v2/clientAwareMemberHandles?q=members&projection=(elements*(handle~))')
+          // let emailAddress = body.data.elements[0]['handle~']['emailAddress']
+          // console.log(emailAddress)
           // End LinkedIn Fetch API
 
           // lets load the categories data
           const categories = await Categories.find()
-          .sort({ createdAt: 'desc' })
+          .sort({ categoryName: 'asc' })
           .lean()
           
           const profile = await User.findOne({
@@ -111,8 +116,7 @@ router.get('/edit/:id', ensureAuth, async (req, res) => {
             res.render('profile/edit', {
               categories,
               errors,
-              profile,
-              emailAddress
+              profile              
             })
           }
         } catch (err) {
@@ -134,9 +138,10 @@ router.put('/:id', ensureAuth, async (req, res) => {
     let profile = await User.findOne({
       linkedinId: req.params.id,
     }).lean()
-    console.log('this is the user profile:', profile)
+    
     if (!profile) {
       return res.render('error/404')
+      console.log(`Error! User profile ${linkedinId} not found...`)            
     }
 
     if(profile.linkedinId != req.user.linkedinId) {
@@ -146,10 +151,17 @@ router.put('/:id', ensureAuth, async (req, res) => {
       if (errors.length > 0) {
         res.render('profile/edit', {
           errors,
-          profile,
-          emailAddress
+          profile          
         })        
       } else {
+      
+        // validation for video Links array
+        let videoLinks = []
+        console.log('video links array length is: ', req.body.videoLinks.length)
+        if (req.body.videoLinks.length < 0) {
+          req.body.videoLinks = videoLinks
+        }        
+
         profile = await User.findOneAndUpdate({ linkedinId: req.params.id }, req.body, {
           new: true,
           runValidators: true

@@ -75,7 +75,7 @@ router.get('/edit/:id', ensureAuth, async (req, res) => {
 
 // @desc DELETE Categories
 // @route DELETE /categories/:id. NOT NEEDED NOW.
-router.delete('/:id', ensureAuth, async (req, res) => {
+router.delete('/delete/:id', ensureAuth, async (req, res) => {
   try {
       await categories.remove({_id: req.params.id})
       res.redirect('/dashboard')

@@ -5,11 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">          
     <!-- Compiled and minified Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.16.1/ckeditor.js" 
             integrity="sha512-2nFxKVmFuBhAR45DBnAANBjtxzf7z0m6wRU7NOquxibA6efrQpUtdjFT4wzqewqTI3/cCNbBzJNUtu1NxjFiKw==" 
             crossorigin="anonymous" referrerpolicy="no-referrer">
@@ -29,6 +31,12 @@
         
         // MaterializeCSS Nav component
         M.Sidenav.init(document.querySelector('.sidenav'))
+        
+        // MaterializeCSS Drop-down component
+        M.FormSelect.init(document.querySelector('#payType'))
+
+        // MaterializeCSS Chip component
+        M.Chips.init(document.querySelector('.chips'))        
 
         CKEDITOR.replace('body', {
             plugins: 'wysiwygarea, toolbar, basicstyles, link, image',
@@ -36,12 +44,6 @@
             removeButtons: '',
             format_tags: 'p;h1;h2;h3;h4;h5;h6;pre;address;div'
         })
-
-        // MaterializeCSS Drop-down component
-        M.FormSelect.init(document.querySelector('select'))     
-
-        // MaterializeCSS Chip component
-        M.Chips.init(document.querySelector('.chips'))
 
         // MaterializeCSS Toast component
         M.Toast.init(document.querySelector('.toast'))

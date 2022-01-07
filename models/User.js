@@ -38,7 +38,7 @@ const UserSchema = new mongoose.Schema({
     },    
     profileType: {
         type: String,
-        default: 'public'
+        default: 'private'
     },
     body: {
         type: String
@@ -47,6 +47,11 @@ const UserSchema = new mongoose.Schema({
         type: Number,
         default: 0.00
     },
+    payType: {
+        type: String,
+        default: 'Hourly',
+        enum: ['Hourly', 'Daily', 'No charge']        
+    },    
     country: {
         type: String
     },

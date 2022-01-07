@@ -1,0 +1,10 @@
+<h2>I'm sorry! I couldn't find the page you were looking for.</h2>
+<h5>404 Not Found</h5>
+<div class="col s12 m4">
+    <div class="card center-align">
+        <div class="card-content">
+            <img src="/assets/images/404-not-found-mascot.png" alt="">
+        </div>
+    </div>
+</div>
+<a href="/dashboard" class="btn">Go to Dashboard</a>
